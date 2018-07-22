@@ -115,38 +115,15 @@ public class ArticleDetailFragment extends Fragment implements
             return;
         }
 
-        TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
-        //TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
-        //bylineView.setMovementMethod(new LinkMovementMethod());
-        TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
-        //collapsingToolbarLayout = mRootView.findViewById(R.id.collapsing_toolbar_layout);
+        TextView titleView = mRootView.findViewById(R.id.article_title);
+        TextView bodyView = mRootView.findViewById(R.id.article_body);
 
         if (mCursor != null) {
-            //mRootView.setAlpha(0);
+            mRootView.setAlpha(0);
             mRootView.setVisibility(View.VISIBLE);
-            //mRootView.animate().alpha(1);
+            mRootView.animate().alpha(1);
             titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
-            //collapsingToolbarLayout.setTitle(mCursor.getString(ArticleLoader.Query.TITLE));
 
-            Date publishedDate = parsePublishedDate();
-            //if (!publishedDate.before(START_OF_EPOCH.getTime())) {
-            //    bylineView.setText(Html.fromHtml(
-            //            DateUtils.getRelativeTimeSpanString(
-            //                    publishedDate.getTime(),
-            //                    System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
-            //                    DateUtils.FORMAT_ABBREV_ALL).toString()
-            //                    + " by <font color='#ffffff'>"
-            //                    + mCursor.getString(ArticleLoader.Query.AUTHOR)
-            //                    + "</font>"));
-            //
-            //} else {
-            //    // If date is before 1902, just show the string
-            //    bylineView.setText(Html.fromHtml(
-            //            outputFormat.format(publishedDate) + " by <font color='#ffffff'>"
-            //            + mCursor.getString(ArticleLoader.Query.AUTHOR)
-            //                    + "</font>"));
-            //
-            //}
             bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />")));
             ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
                     .get(mCursor.getString(ArticleLoader.Query.PHOTO_URL), new ImageLoader.ImageListener() {
@@ -156,10 +133,6 @@ public class ArticleDetailFragment extends Fragment implements
                             if (bitmap != null) {
                                 Palette p = Palette.generate(bitmap, 12);
                                 mPhotoView.setImageBitmap(imageContainer.getBitmap());
-                                //mRootView.findViewById(R.id.meta_bar)
-                                //        .setBackgroundColor(mMutedColor);
-
-                                //updateStatusBar();
                             }
                         }
 
@@ -171,7 +144,6 @@ public class ArticleDetailFragment extends Fragment implements
         } else {
             mRootView.setVisibility(View.GONE);
             titleView.setText("N/A");
-            //bylineView.setText("N/A" );
             bodyView.setText("N/A");
         }
     }
